@@ -18,23 +18,20 @@ export default function App() {
   }, [contacts]);
 
   const createContact = ({ name, number }) => {
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
+    const newContact = !contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (!newContact) {
       alert(`${name} is alredy in contacts`);
+      return newContact;
     }
     setContacts(prevState => [...prevState, { id: nanoid(), name, number }]);
+    return newContact;
   };
 
   const deleteUser = id => {
     setContacts(prevState => prevState.filter(contacts => contacts.id !== id));
   };
-
-  // const createFilterData = data => {
-  //   this.setState(data);
-  // };
 
   const formattedFilter = filter.toLowerCase();
   const filteredContacts = contacts.filter(contact =>
